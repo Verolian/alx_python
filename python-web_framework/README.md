@@ -1,0 +1,1 @@
+For this project, I am going to be working with differrent modules. I will create a server using the flask framework . I am also going to be intergrating the modules from previous projects . I will ne using jinja, flask and sqlalchemy.
