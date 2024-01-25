@@ -1,71 +1,47 @@
-#!/usr/bin/python3
-"""
-Import flask
-"""
-from flask import Flask, render_template
+"""Basic flask web server using flask"""
+from flask import Flask, render_template ,render_template_string  
+
 app = Flask(__name__)
-
-
+#home
 @app.route('/', strict_slashes=False)
-def Hello_HBNB():
-    """created my first route"""
-    return 'Hello HBNB!'
-
-
-@app.route('/hbnb', strict_slashes=False)
+def hello_hbnb():
+    return "Hello HBNB!"
+#first route within a route
+@app.route('/hbnb',strict_slashes=False)
 def hbnb():
-    """added a new route that display something else"""
-    return 'HBNB'
-
-
+    return "HBNB"
+#dynamic routes
 @app.route('/c/<text>', strict_slashes=False)
-def c_way(text):
-    """
-    display C then followed by any value appeneded to it
-    """
-    return 'C ' + text.replace('_', ' ')
-
-
+def c_route(text):
+    # Replace underscores with spaces in the text variable
+    formatted_text = text.replace('_', ' ')
+    return f"C {formatted_text}"
+#python parameters
 @app.route('/python/<text>', strict_slashes=False)
-def python(text='is cool'):
-    """
-    declare two route that has a default string
-    but can change when needed
-    """
-    return 'Python ' + text.replace('_', ' ')
+@app.route('/python', strict_slashes=False)
+def display_python(text="is_cool"):
+    formatted_text = text.replace("_", " ")
+    return f"Python {formatted_text}"
 
+# n is a number" only if n is an integer
+@app.route('/number/<int:n>', strict_slashes=False)
+def number(n):
+    return "{} is a number".format(n)
 
 @app.route('/number/<int:n>', strict_slashes=False)
-def int_validator(n):
-    """
-    detects if the entered argument is a number.
-    if not return a error page
-    """
-    return '{:d} is a number'.format(n)
+def is_number(n):
+    return "{} is a number".format(n)
 
+@app.route('/number_template/<int:n>')
+def display_number_template(n):
+    #if isinstance(n, int):
+        return render_template('5-number.html', n=n)
 
-@app.route('/number_template/<int:n>', strict_slashes=False)
-def html_int_validator(n):
-    """
-    detects if the entered argument is a number.
-    if yes return an html page
-    """
-    return render_template('5-number.html', n=n)
-
-
-@app.route('/number_odd_or_even/<int:n>', strict_slashes=False)
-def html_even_odd_validator(n):
-    """
-    detects if the entered argument is an even or odd number.
-    if yes return an html page with the numbe
-    r"""
-    if n % 2 == 0:
-        even_or_odd = 'even'
-    else:
-        even_or_odd = 'odd'
-    return render_template('6-number_odd_or_even.html',
-                           n=n, even_or_odd=even_or_odd)
-
+# /number_odd_or_even/<n>
+@app.route('/number_odd_or_even/<int:n>',strict_slashes=False)
+def number_odd_or_even(n):
+    odd_even = "even" if n % 2 == 0 else "odd"
+    return render_template('6-number_odd_or_even.html', n=n, odd_even=odd_even)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000,debug=True)
