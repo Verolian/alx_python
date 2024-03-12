@@ -1,0 +1,1 @@
+This readme will have all my code for python classes . ie methods , properties etc
