@@ -1,1 +1,1 @@
-This readme has all my projects containing *args, *kwargs and JSON encoder and decoder.
+This readme has all my projects in regards to *args and *kwargs
